@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CADASTRO</title>
+</head>
+<body>
+    <h1>CADASTRO DE EVENTO</h1>
+    <form id="eventoForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br>
+        <label for="data">Data:</label>
+        <input type="date" id="data" name="data" required><br>
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora" name="hora" required><br>
+        <label for="descricao">Descrição</label>
+        <textarea rows="4" id="descricao" name="descricao" required></textarea><br>
+        <button type="button" onclick="exportarcsv()">exportar</button>
+    </form>
+    <script>
+        function exportarcsv() {
+            const nome=document.getElementById('nome').value;
+            const data=document.getElementById('data').value;
+            const hora=document.getElementById('hora').value;
+            const descricao=document.getElementById('descricao').value;
+            const csvcontent=`"${nome}";"${data}";"${hora}";"${descricao}"`;
+            const blob=new Blob([csvcontent],{ type: 'text/csv;charset=UTF-8;'});
+            const url=URL.createObjectURL(blob);
+            const link=document.createElement('a');
+            link.setAttribute('href',url);
+            link.setAttribute('download','evento.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
