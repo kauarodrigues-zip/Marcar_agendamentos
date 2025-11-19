@@ -1,0 +1,147 @@
+@charset "UTF-8";
+
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Fundo da página */
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1f2933);
+    color: #f9fafb;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container principal */
+form {
+    background: #111827;
+    padding: 24px 28px;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    width: 100%;
+    max-width: 420px;
+}
+
+/* Título */
+h1 {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    color: #e5e7eb;
+}
+
+/* Labels e inputs */
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: #d1d5db;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+    border: 1px solid #374151;
+    background-color: #020617;
+    color: #e5e7eb;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border 0.2s ease, box-shadow 0.2s ease, background-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+textarea:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 1px #6366f1;
+    background-color: #020617;
+}
+
+/* Textarea */
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Container de botões */
+.botoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+/* Botões */
+button {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s;
+}
+
+/* Botão registrar */
+button.registrar {
+    background: #fbbf24;
+    color: #78350f;
+    box-shadow: 0 4px 10px rgba(251, 191, 36, 0.4);
+}
+
+button.registrar:hover {
+    background: #f59e0b;
+    transform: translateY(-1px);
+}
+
+/* Botão exportar */
+button.exportar {
+    background: #10b981;
+    color: #022c22;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+}
+
+button.exportar:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+/* Botão imprimir */
+button.imprimir {
+    background: #3b82f6;
+    color: #eff6ff;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.45);
+}
+
+button.imprimir:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+/* Responsividade básica */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.3rem;
+        top: 12px;
+    }
+
+    form {
+        margin-top: 40px;
+        padding: 18px 16px;
+    }
+}

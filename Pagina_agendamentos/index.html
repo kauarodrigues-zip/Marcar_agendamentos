@@ -3,37 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>CADASTRO</title>
 </head>
 <body>
     <h1>CADASTRO DE EVENTO</h1>
+
     <form id="eventoForm">
-        <label for="nome">Nome:</label>
+        <label for="nome">Nome do evento</label>
         <input type="text" id="nome" name="nome" required><br>
+
         <label for="data">Data:</label>
         <input type="date" id="data" name="data" required><br>
+
         <label for="hora">Hora:</label>
         <input type="time" id="hora" name="hora" required><br>
+
         <label for="descricao">Descrição</label>
         <textarea rows="4" id="descricao" name="descricao" required></textarea><br>
-        <button type="button" onclick="exportarcsv()">exportar</button>
+
+        <div class="botoes">
+            <button type="button" class="registrar" onclick="registrarDados()">Registrar</button>
+            <button type="button" class="exportar" onclick="exportarcsv()">Exportar</button>
+            <button type="button" class="imprimir" onclick="imprimirDados()">Imprimir</button>
+        </div>
     </form>
+
     <script>
+        // Array para guardar registros
+        const registros = [];
+
+        // Função para pegar csv de um registro
+        function getCSVSingle(nome, data, hora, descricao) {
+            return `"${nome}";"${data}";"${hora}";"${descricao}"`;
+        }
+
+        // Função que captura valores do formulário
+        function getFormValues() {
+            return {
+                nome: document.getElementById("nome").value,
+                data: document.getElementById("data").value,
+                hora: document.getElementById("hora").value,
+                descricao: document.getElementById("descricao").value
+            };
+        }
+
+        // registrar — adiciona ao array e limpa o formulário
+        function registrarDados() {
+            const { nome, data, hora, descricao } = getFormValues();
+
+            const linhaCSV = getCSVSingle(nome, data, hora, descricao);
+            registros.push(linhaCSV);
+
+            // limpa os campos
+            document.getElementById("eventoForm").reset();
+
+            alert("Registro salvo com sucesso!");
+        }
+
+        // exportar — exporta todos os registros
         function exportarcsv() {
-            const nome=document.getElementById('nome').value;
-            const data=document.getElementById('data').value;
-            const hora=document.getElementById('hora').value;
-            const descricao=document.getElementById('descricao').value;
-            const csvcontent=`"${nome}";"${data}";"${hora}";"${descricao}"`;
-            const blob=new Blob([csvcontent],{ type: 'text/csv;charset=UTF-8;'});
-            const url=URL.createObjectURL(blob);
-            const link=document.createElement('a');
-            link.setAttribute('href',url);
-            link.setAttribute('download','evento.csv');
+            if (registros.length === 0) {
+                alert("Nenhum registro encontrado.");
+                return;
+            }
+
+            const csvContent = registros.join("\n");
+
+            const blob = new Blob([csvContent], { type: "text/csv;charset=UTF-8;" });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "eventos.csv";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
+
+        // imprimir — imprime todos os registros em formato csv puro
+        function imprimirDados() {
+            if (registros.length === 0) {
+                alert("Nenhum registro encontrado.");
+                return;
+            }
+
+            const csvContent = registros.join("\n");
+
+            const printWindow = window.open("", "_blank");
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Imprimir Eventos</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            font-size: 16px;
+                            padding: 20px;
+                            white-space: pre-wrap;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${csvContent}
+                </body>
+                </html>
+            `);
+
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+        }
     </script>
+
 </body>
 </html>
